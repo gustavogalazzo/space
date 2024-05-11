@@ -12,7 +12,10 @@ body {
     font-family: 'Montserrat', sans-serif;
     color: var(--pure);
     background: var(--primary); 
+    -webkit-font-smoothing: antialiased;
 }
+
+/***************************HEADER***************************/
 
 header{
   background: linear-gradient(135deg, rgba(0,0,0,1),rgba(0,0,0,0.2)), url(../assests/img/back3.jpg);
@@ -164,6 +167,8 @@ header nav .nav-right .search > div img {
      transform: translateY(100px) rotate(-30deg) scale(0.8); 
   }
 }
+
+/***************************SECTION***************************/
 
 section.strip {
   display: flex;
@@ -381,6 +386,8 @@ section.rocket .rocket-body span.active:nth-child(3):before {
 section.rocket .rocket-body span.active:nth-child(1) {
   animation: jump 1s ease-in-out forwards;
 }
+
+/***************************FOOTER***************************/
 
 footer {
   background: var(--dark);
