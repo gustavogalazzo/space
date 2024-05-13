@@ -7,7 +7,41 @@
   </head>
   <body>
     <main>
-      <form></form>
+      <div class="box-form">
+        <div class="register-container" id="register">
+          <div class="top">
+            <h2>Cadastre um novo Endereço</h2>
+          </div>
+          <div class="input-box">
+            <label for="Titulo">Título:</label>
+            <input
+              type="text"
+              id="Titulo"
+              name="Titulo"
+              placeholder="Digite um Titulo"
+            />
+            <label for="CEP">CEP:</label>
+            <input
+              type="text"
+              id="CEP"
+              name="CEP"
+              placeholder="Digite seu CEP"
+            />
+            <label for="Endereço">Endereço:</label>
+            <input
+              type="text"
+              id="Endereço"
+              name="Endereço"
+              placeholder="Informe seu Endereço"
+            />
+            <label for="Número">Número:</label>
+            <input type="text" id="Número" name="Número" placeholder="Número" />
+          </div>
+          <div class="input-box">
+            <button type="button" onclick="salvarendereco()">Cadastrar</button>
+          </div>
+        </div>
+      </div>
     </main>
   </body>
 </html>
