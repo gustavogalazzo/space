@@ -1,4 +1,4 @@
-const url = 'https://go-wash-api.onrender.com/api/auth/address' // LINK DA API
+const url = 'https://go-wash-api.onrender.com/api/user' // LINK DA API
 
 async function validarbirthday() {
   var data = document.getElementById('birthday').value // pega o valor do input

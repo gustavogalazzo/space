@@ -70,13 +70,19 @@
           <div id="msgError"></div>
 
           <div class="label-float">
-            <input type="text" id="user" placeholder="" required />
-            <label id="userLabel" for="user">User</label>
+            <input
+              type="text"
+              id="email"
+              name="email"
+              placeholder=""
+              required
+            />
+            <label for="email">User</label>
           </div>
           <div class="label-float">
-            <input type="password" id="password" placeholder="" required />
+            <input type="password" id="password" name="password" required />
             <label id="passLabel" for="password">Password</label>
-            <i id="versenha" class="fa fa-eye" aria-hidden="true"></i>
+            <i class="fa fa-eye" aria-hidden="true"></i>
           </div>
           <div class="justify-center">
             <button onclick="loginUser()">Login</button>

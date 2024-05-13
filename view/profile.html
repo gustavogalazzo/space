@@ -3,45 +3,61 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
+    <link rel="stylesheet" href="../assests/profile.css" />
+    <link rel="stylesheet" href="../assests/utilies.css" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="../assests/img/spacex_logo_icon_144865.png"
+    />
+    <title>My Profile - SpaceX</title>
   </head>
   <body>
-    <main>
-      <div class="box-form">
-        <div class="register-container" id="register">
-          <div class="top">
-            <h2>Cadastre um novo Endereço</h2>
+    <header>
+      <nav>
+        <div class="brand">
+          <a href="../Index.html">
+            <img src="../assests/img/Daco_4533340.png" alt="Logo" />
+          </a>
+        </div>
+        <!--LOGO-->
+        <div class="nav-right">
+          <div class="nav-links">
+            <a href="../Index.html">Home</a>
+            <a href="../view/about.html">Planets</a>
+            <a href="../view/contact.html">Contact</a>
+            <a href="../view/login.html">Login</a>
+            <a href="../view/login.html" class="active">My Profile</a>
           </div>
-          <div class="input-box">
-            <label for="Titulo">Título:</label>
-            <input
-              type="text"
-              id="Titulo"
-              name="Titulo"
-              placeholder="Digite um Titulo"
-            />
-            <label for="CEP">CEP:</label>
-            <input
-              type="text"
-              id="CEP"
-              name="CEP"
-              placeholder="Digite seu CEP"
-            />
-            <label for="Endereço">Endereço:</label>
-            <input
-              type="text"
-              id="Endereço"
-              name="Endereço"
-              placeholder="Informe seu Endereço"
-            />
-            <label for="Número">Número:</label>
-            <input type="text" id="Número" name="Número" placeholder="Número" />
+          <!--NAV-LINKS-->
+          <div class="search">
+            <div>
+              <img src="../assests/img/search.png" alt="" />
+              <input type="text" placeholder="Search" />
+            </div>
           </div>
-          <div class="input-box">
-            <button type="button" onclick="salvarendereco()">Cadastrar</button>
+          <!--SEARCH-->
+        </div>
+        <!--NAV-RIGHT-->
+      </nav>
+      <section class="hero">
+        <div class="social">
+          <div>
+            <a href=""><i class="fab fa-facebook"></i></a>
+          </div>
+          <div>
+            <a href="#"><i class="fab fa-twitter"></i></a>
+          </div>
+          <div>
+            <a href="#"><i class="fab fa-instagram"></i></a>
+          </div>
+          <div>
+            <a href="#"><i class="fab fa-youtube"></i></a>
           </div>
         </div>
-      </div>
-    </main>
+      </section>
+    </header>
+    <main></main>
   </body>
 </html>
