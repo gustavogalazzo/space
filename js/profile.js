@@ -1,4 +1,7 @@
+// Definindo a URL da API para obter o endereço com base no CEP
 const url = 'https://go-wash-api.onrender.com/api/user'
+
+// Selecionando os elementos do formulário de endereço
 const addressForm = document.querySelector('#address-form')
 const cepInput = document.querySelector('#cep')
 const addressInput = document.querySelector('#address')
@@ -7,9 +10,10 @@ const neighborhoodInput = document.querySelector('#neighborhood')
 const regionInput = document.querySelector('#region')
 const formInputs = document.querySelectorAll('[data-input]')
 
+// Selecionando o botão de fechar mensagem
 const closeButton = document.querySelector('#close-message')
 
-// Validate CEP Input
+// Validando a entrada do CEP para aceitar apenas números
 cepInput.addEventListener('keypress', e => {
   const onlyNumbers = /[0-9]|\./
   const key = String.fromCharCode(e.keyCode)
@@ -18,45 +22,45 @@ cepInput.addEventListener('keypress', e => {
 
   console.log(onlyNumbers.test(key))
 
-  // allow only numbers
+  // Impedindo a entrada de caracteres que não sejam números
   if (!onlyNumbers.test(key)) {
     e.preventDefault()
     return
   }
 })
 
-// Evento to get address
+// Obtendo o endereço quando o usuário insere um CEP válido
 cepInput.addEventListener('keyup', e => {
   const inputValue = e.target.value
 
-  //   Check if we have a CEP
+  // Verificando se o CEP inserido tem o comprimento adequado
   if (inputValue.length === 8) {
     getAddress(inputValue)
   }
 })
 
-// Get address from API
+// Função para obter o endereço da API
 const getAddress = async cep => {
-  toggleLoader()
+  toggleLoader() // Mostra o loader enquanto a requisição está sendo feita
 
-  cepInput.blur()
+  cepInput.blur() // Remove o foco do campo do CEP
 
   const apiUrl = `https://viacep.com.br/ws/${cep}/json/`
 
+  // Fazendo a requisição à API para obter o endereço
   const response = await fetch(apiUrl)
-
   const data = await response.json()
 
   console.log(data)
   console.log(formInputs)
   console.log(data.erro)
 
-  // Show error and reset form
+  // Verificando se há erro na resposta da API
   if (data.erro === 'true') {
     if (!addressInput.hasAttribute('disabled')) {
+      // Mostra uma mensagem de erro se o CEP for inválido
       toggleDisabled()
     }
-
     addressForm.reset()
     toggleLoader()
     toggleMessage('CEP Inválido, tente novamente.')
@@ -68,12 +72,13 @@ const getAddress = async cep => {
     toggleDisabled()
   }
 
+  // Preenche os campos do formulário com os dados do endereço
   addressInput.value = data.logradouro
   cityInput.value = data.localidade
   neighborhoodInput.value = data.bairro
   regionInput.value = data.uf
 
-  toggleLoader()
+  toggleLoader() // Esconde o loader após a obtenção do endereço
 }
 
 // Add or remove disable attribute
@@ -130,11 +135,3 @@ addressForm.addEventListener('submit', e => {
     toggleDisabled()
   }, 1000)
 })
-
-function salvarEndereco() {
-  const endereco = document.getElementById('endereco').textContent
-  const listaEnderecos = document.getElementById('lista-enderecos')
-  const novoEnderecoItem = document.createElement('li')
-  novoEnderecoItem.textContent = endereco
-  listaEnderecos.appendChild(novoEnderecoItem)
-}
