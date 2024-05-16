@@ -79,6 +79,27 @@ header nav .nav-right .search > div img {
   padding-right: 16px;
 }
 
+.header nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.hamburger-menu {
+  display: none; /* Esconder o menu de hambúrguer por padrão */
+  flex-direction: column;
+  cursor: pointer;
+}
+
+.bar {
+  width: 25px;
+  height: 3px;
+  background-color: #fff;
+  margin: 3px 0;
+  transition: 0.4s;
+}
+
+
 .social div {
   border: 2px solid var(--pure);
   width: 40px;
@@ -263,4 +284,50 @@ footer .footer-socials a {
 
 footer .footer-socials a:hover {
   color: var(--pure);
+}
+
+@media only screen and (max-width: 768px) {
+
+  header nav {
+    padding: 20px; /* Reduzindo o padding para telas menores */
+    grid-template-columns: 1fr; /* Alterando para uma única coluna para telas menores */
+  }
+  
+  header nav .nav-left {
+    justify-content: space-between;
+  }
+  
+  header nav .nav-right {
+    /* display: none; Ocultando o menu principal em telas menores */
+  }
+  
+  .hamburger-menu {
+    display: flex; /* Exibindo o menu de hambúrguer em telas menores */
+    align-items: center;
+    justify-content: flex-end;
+    margin-right: 20px; /* Adicionando margem para o lado direito */
+  }
+  
+  .bar {
+    width: 25px;
+    height: 3px;
+    background-color: #fff;
+    margin: 3px 0;
+    transition: 0.4s;
+  }
+  .nav-right {
+    display: none; /* Ocultar o menu principal em telas menores */
+  }
+
+  .hamburger-menu {
+    display: flex; /* Exibir o menu de hambúrguer em telas menores */
+  }
+
+  .nav-left {
+    justify-content: space-between;
+  }
+
+  header nav {
+    padding: 20px;
+  }
 }

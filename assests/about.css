@@ -222,3 +222,22 @@ header nav .nav-right .search > div img {
     transform: rotateZ(360deg);
   }
 }
+
+/**************** Estilos padrão ***************/
+
+@media only screen and (max-width: 768px) {
+  header nav {
+    padding: 20px;
+    grid-template-columns: 1fr;
+    text-align: center;
+  }
+
+  header nav .nav-right {
+    margin-top: 20px;
+  }
+
+  header nav .nav-right a {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+}
