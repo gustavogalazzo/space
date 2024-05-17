@@ -1,137 +1,122 @@
-// Definindo a URL da API para obter o endereço com base no CEP
-const url = 'https://go-wash-api.onrender.com/api/user'
+// Espera o evento 'DOMContentLoaded', que indica que o HTML da página foi completamente carregado
+document.addEventListener('DOMContentLoaded', () => {
+  // Obtenção dos elementos do formulário e da lista de endereços
+  const form = document.getElementById('address-form')
+  const cepInput = document.getElementById('cep')
+  const streetInput = document.getElementById('street')
+  const numberInput = document.getElementById('number')
+  const neighborhoodInput = document.getElementById('neighborhood')
+  const cityInput = document.getElementById('city')
+  const stateInput = document.getElementById('state')
+  const complementInput = document.getElementById('complement')
+  const validateCepButton = document.getElementById('validate-cep')
+  const addressList = document.getElementById('address-list')
 
-// Selecionando os elementos do formulário de endereço
-const addressForm = document.querySelector('#address-form')
-const cepInput = document.querySelector('#cep')
-const addressInput = document.querySelector('#address')
-const cityInput = document.querySelector('#city')
-const neighborhoodInput = document.querySelector('#neighborhood')
-const regionInput = document.querySelector('#region')
-const formInputs = document.querySelectorAll('[data-input]')
-
-// Selecionando o botão de fechar mensagem
-const closeButton = document.querySelector('#close-message')
-
-// Validando a entrada do CEP para aceitar apenas números
-cepInput.addEventListener('keypress', e => {
-  const onlyNumbers = /[0-9]|\./
-  const key = String.fromCharCode(e.keyCode)
-
-  console.log(key)
-
-  console.log(onlyNumbers.test(key))
-
-  // Impedindo a entrada de caracteres que não sejam números
-  if (!onlyNumbers.test(key)) {
-    e.preventDefault()
-    return
-  }
-})
-
-// Obtendo o endereço quando o usuário insere um CEP válido
-cepInput.addEventListener('keyup', e => {
-  const inputValue = e.target.value
-
-  // Verificando se o CEP inserido tem o comprimento adequado
-  if (inputValue.length === 8) {
-    getAddress(inputValue)
-  }
-})
-
-// Função para obter o endereço da API
-const getAddress = async cep => {
-  toggleLoader() // Mostra o loader enquanto a requisição está sendo feita
-
-  cepInput.blur() // Remove o foco do campo do CEP
-
-  const apiUrl = `https://viacep.com.br/ws/${cep}/json/`
-
-  // Fazendo a requisição à API para obter o endereço
-  const response = await fetch(apiUrl)
-  const data = await response.json()
-
-  console.log(data)
-  console.log(formInputs)
-  console.log(data.erro)
-
-  // Verificando se há erro na resposta da API
-  if (data.erro === 'true') {
-    if (!addressInput.hasAttribute('disabled')) {
-      // Mostra uma mensagem de erro se o CEP for inválido
-      toggleDisabled()
+  // Event listener para o botão de validar CEP
+  validateCepButton.addEventListener('click', async () => {
+    // Obtém o valor do CEP do input
+    const cep = cepInput.value
+    // Verifica se o campo de CEP está preenchido
+    if (cep) {
+      try {
+        // Faz uma requisição para a API ViaCEP para obter os detalhes do endereço
+        const response = await fetch(`https://viacep.com.br/ws/${cep}/json/`)
+        // Verifica se a resposta da requisição é bem sucedida
+        if (!response.ok) {
+          throw new Error('Erro ao buscar CEP')
+        }
+        // Converte a resposta para JSON
+        const data = await response.json()
+        // Verifica se o CEP foi encontrado
+        if (data.erro) {
+          // Mostra um alerta se o CEP não foi encontrado
+          alert('CEP não encontrado')
+        } else {
+          // Preenche os campos do endereço com os dados obtidos da API
+          streetInput.value = data.logradouro
+          neighborhoodInput.value = data.bairro
+          cityInput.value = data.localidade
+          stateInput.value = data.uf
+        }
+      } catch (error) {
+        // Mostra um alerta se ocorrer um erro na requisição
+        alert(error.message)
+      }
+    } else {
+      // Mostra um alerta se o campo de CEP estiver vazio
+      alert('Por favor, insira um CEP')
     }
-    addressForm.reset()
-    toggleLoader()
-    toggleMessage('CEP Inválido, tente novamente.')
-    return
+  })
+
+  // Event listener para o envio do formulário
+  form.addEventListener('submit', async e => {
+    // Previne o comportamento padrão de envio do formulário
+    e.preventDefault()
+
+    // Obtém os valores dos inputs do formulário
+    const cep = cepInput.value
+    const street = streetInput.value
+    const number = numberInput.value
+    const neighborhood = neighborhoodInput.value
+    const city = cityInput.value
+    const state = stateInput.value
+    const complement = complementInput.value
+
+    try {
+      // Faz uma requisição POST para cadastrar o endereço na API
+      const response = await fetch(
+        'https://go-wash-api.onrender.com/api/auth/address',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            cep,
+            street,
+            number,
+            neighborhood,
+            city,
+            state,
+            complement
+          })
+        }
+      )
+
+      // Verifica se a requisição foi bem sucedida
+      if (response.ok) {
+        // Adiciona o endereço à lista na página e reseta o formulário
+        addAddressToList({
+          cep,
+          street,
+          number,
+          neighborhood,
+          city,
+          state,
+          complement
+        })
+        form.reset()
+      } else {
+        // Mostra um alerta se ocorrer um erro ao cadastrar o endereço
+        alert('Erro ao cadastrar endereço')
+      }
+    } catch (error) {
+      // Mostra um alerta se ocorrer um erro na comunicação com o servidor
+      alert('Erro na comunicação com o servidor')
+    }
+  })
+
+  // Função para adicionar um endereço à lista na página
+  function addAddressToList(address) {
+    // Cria um novo elemento <li> para o endereço
+    const li = document.createElement('li')
+    // Define o conteúdo do <li> com os detalhes do endereço
+    li.textContent = `${address.street}, ${address.number}, ${
+      address.neighborhood
+    }, ${address.city}, ${address.state}, CEP: ${address.cep}, Complemento: ${
+      address.complement || 'N/A'
+    }`
+    // Adiciona o <li> à lista de endereços
+    addressList.appendChild(li)
   }
-
-  // Activate disabled attribute if form is empty
-  if (addressInput.value === '') {
-    toggleDisabled()
-  }
-
-  // Preenche os campos do formulário com os dados do endereço
-  addressInput.value = data.logradouro
-  cityInput.value = data.localidade
-  neighborhoodInput.value = data.bairro
-  regionInput.value = data.uf
-
-  toggleLoader() // Esconde o loader após a obtenção do endereço
-}
-
-// Add or remove disable attribute
-const toggleDisabled = () => {
-  if (regionInput.hasAttribute('disabled')) {
-    formInputs.forEach(input => {
-      input.removeAttribute('disabled')
-    })
-  } else {
-    formInputs.forEach(input => {
-      input.setAttribute('disabled', 'disabled')
-    })
-  }
-}
-
-// Show or hide loader
-const toggleLoader = () => {
-  const fadeElement = document.querySelector('#fade')
-  const loaderElement = document.querySelector('#loader')
-
-  fadeElement.classList.toggle('hide')
-  loaderElement.classList.toggle('hide')
-}
-
-// Show or hide message
-const toggleMessage = msg => {
-  const fadeElement = document.querySelector('#fade')
-  const messageElement = document.querySelector('#message')
-
-  const messageTextElement = document.querySelector('#message p')
-
-  messageTextElement.innerText = msg
-
-  fadeElement.classList.toggle('hide')
-  messageElement.classList.toggle('hide')
-}
-
-// Close message modal
-closeButton.addEventListener('click', () => toggleMessage())
-
-// Save address
-addressForm.addEventListener('submit', e => {
-  e.preventDefault()
-
-  toggleLoader()
-
-  setTimeout(() => {
-    toggleLoader()
-
-    toggleMessage('Endereço salvo com sucesso!')
-
-    addressForm.reset()
-
-    toggleDisabled()
-  }, 1000)
 })

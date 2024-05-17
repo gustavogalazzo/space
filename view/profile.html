@@ -4,7 +4,6 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/js/all.min.js"></script>
-    <script src="../js/profile.js" defer></script>
     <link rel="stylesheet" href="../assests/profile.css" />
     <link rel="stylesheet" href="../assests/utilies.css" />
     <link
@@ -73,172 +72,33 @@
       </section>
     </header>
     <main>
-      <div id="fade" class="hide">
-        <div id="loader" class="spinner-border text-info hide" role="status">
-          <span class="visually-hidden">Loading...</span>
-        </div>
-        <div id="message" class="hide">
-          <div class="alert alert-light" role="alert">
-            <h4>Mensagem:</h4>
-            <p></p>
-            <button id="close-message" type="button" class="btn btn-secondary">
-              Fechar
-            </button>
-          </div>
-        </div>
-      </div>
-      <div id="order-form-container" class="container p-6 my-md-4 px-md-0">
-        <div id="steps" class="mb-md-3 pb-md-3">
-          <div class="step">
-            <i class="bi bi-geo-alt active"></i>
-            <p class="d-none d-md-block">Endereço</p>
-          </div>
-        </div>
-        <div id="form-header">
-          <h2>Cadastre o seu endereço</h2>
-          <p>Preencha os campos</p>
-        </div>
-        <form id="address-form">
-          <div class="row mb-3">
-            <div class="form-floating">
-              <input
-                type="text"
-                class="form-control shadow-none"
-                id="cep"
-                name="cep"
-                placeholder="Digite o seu CEP"
-                maxlength="8"
-                minlength="8"
-                required
-              />
-              <label for="cep">Digite o seu CEP</label>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-12 col-sm-6 mb-3 mb-md-0 form-floating">
-              <input
-                type="text"
-                class="form-control shadow-none"
-                id="address"
-                name="address"
-                placeholder="Rua"
-                disabled
-                required
-                data-input
-              />
-              <label for="address">Rua</label>
-            </div>
-            <div class="col-12 col-sm-6 form-floating">
-              <input
-                type="text"
-                class="form-control shadow-none"
-                id="number"
-                name="number"
-                placeholder="Digite o número da residência"
-                disabled
-                required
-                data-input
-              />
-              <label for="number">Digite o número da residência</label>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-12 col-sm-6 mb-3 mb-md-0 form-floating">
-              <input
-                type="text"
-                class="form-control shadow-none"
-                id="complement"
-                name="complement"
-                placeholder="Digite o complemento"
-                disabled
-                data-input
-              />
-              <label for="complement">Digite o complemento</label>
-            </div>
-            <div class="col-12 col-sm-6 form-floating">
-              <input
-                type="text"
-                class="form-control shadow-none"
-                id="neighborhood"
-                name="neighborhood"
-                placeholder="Bairro"
-                disabled
-                required
-                data-input
-              />
-              <label for="neighborhood">Bairro</label>
-            </div>
-          </div>
-          <div class="row mb-3">
-            <div class="col-12 col-sm-6 mb-3 mb-md-0 form-floating">
-              <input
-                type="text"
-                class="form-control shadow-none"
-                id="city"
-                name="city"
-                placeholder="Cidade"
-                disabled
-                required
-                data-input
-              />
-              <label for="city">Cidade</label>
-            </div>
-            <div class="col-12 col-sm-6 mb-3">
-              <select
-                class="form-select shadow-none"
-                id="region"
-                disabled
-                required
-                data-input
-              >
-                <option selected>Estado</option>
-                <option value="AC">Acre</option>
-                <option value="AL">Alagoas</option>
-                <option value="AP">Amapá</option>
-                <option value="AM">Amazonas</option>
-                <option value="BA">Bahia</option>
-                <option value="CE">Ceará</option>
-                <option value="DF">Distrito Federal</option>
-                <option value="ES">Espírito Santo</option>
-                <option value="GO">Goiás</option>
-                <option value="MA">Maranhão</option>
-                <option value="MT">Mato Grosso</option>
-                <option value="MS">Mato Grosso do Sul</option>
-                <option value="MG">Minas Gerais</option>
-                <option value="PA">Pará</option>
-                <option value="PB">Paraíba</option>
-                <option value="PR">Paraná</option>
-                <option value="PE">Pernambuco</option>
-                <option value="PI">Piauí</option>
-                <option value="RJ">Rio de Janeiro</option>
-                <option value="RN">Rio Grande do Norte</option>
-                <option value="RS">Rio Grande do Sul</option>
-                <option value="RO">Rondônia</option>
-                <option value="RR">Roraima</option>
-                <option value="SC">Santa Catarina</option>
-                <option value="SP">São Paulo</option>
-                <option value="SE">Sergipe</option>
-                <option value="TO">Tocantins</option>
-              </select>
-            </div>
-          </div>
-          <div class="d-flex justify-content-end">
-            <button
-              id="save-btn"
-              type="submit"
-              class="btn btn-primary"
-              onclick="salvarEndereco()"
-            >
-              Cadastrar
-            </button>
-          </div>
-        </form>
-      </div>
-      <div class="enderecoSalvo">
-        <h2>Endereços Salvos:</h2>
-          <ul id="lista-enderecos"></ul>
+      <div class="address-container">
+        <div class="address">
+          <h1>Cadastro de Endereços</h1>
+          <form id="address-form">
+            <label for="cep">CEP:</label>
+            <input type="text" id="cep" name="cep" required />
+            <button type="button" id="validate-cep">Validar CEP</button>
+            <label for="street">Rua:</label>
+            <input type="text" id="street" name="street" required />
+            <label for="number">Número:</label>
+            <input type="text" id="number" name="number" required />
+            <label for="neighborhood">Bairro:</label>
+            <input type="text" id="neighborhood" name="neighborhood" required />
+            <label for="city">Cidade:</label>
+            <input type="text" id="city" name="city" required />
+            <label for="state">Estado:</label>
+            <input type="text" id="state" name="state" required />
+            <label for="complement">Complemento:</label>
+            <input type="text" id="complement" name="complement" />
+            <button type="submit" id="submit-button">Cadastrar</button>
+          </form>
+          <p id="message" class="message"></p>
+          <h2>Endereços Cadastrados</h2>
+          <ul id="address-list"></ul>
         </div>
       </div>
+      <button id="logout-button">Logout</button>
     </main>
     <footer>
       <div class="container">
@@ -284,5 +144,6 @@
         </div>
       </div>
     </footer>
+    <script src="../js/profile.js"></script>
   </body>
 </html>
